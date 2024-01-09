@@ -24,15 +24,20 @@ class Book(models.Model):
     
     @admin.display(ordering="rating", description="Rating")
     def rating_as_starts(self):
+        """
+        convert rating number to starts
+        """
         match self.rating:
             case 1: return "⭐"
             case 2: return "⭐⭐"
             case 3: return "⭐⭐⭐"
             case 4: return "⭐⭐⭐⭐"
             case 5: return "⭐⭐⭐⭐⭐"
+            # this not reachable
             case _: return ""
 
     def clean(self) -> None:
+        # sanitized fields
         self.title = html.escape(self.title)
         self.author = html.escape(self.author)
         return super().clean()
@@ -45,6 +50,7 @@ class BookReview(models.Model):
     date = models.DateField()
     
     def clean(self):
+        # sanitized fields
         self.reviewer_name = html.escape(self.reviewer_name)
         self.comment = html.escape(self.comment)
         return super().clean()

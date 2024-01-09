@@ -31,10 +31,13 @@ class BookAdmin(admin.ModelAdmin):
         )
 
         writer = csv.writer(response)
+        # write line that have title for the columns
         writer.writerow(["title", "author", "published_date", "genre", "rating"])
+        # iterate over selected books and convert them into CSV row
         for obj in queryset:
             writer.writerow([obj.title, obj.author, obj.published_date, obj.genre, obj.rating])
 
+        # return the file
         return response
 
 
